@@ -4,12 +4,15 @@ app = Flask(__name__)
 
 
 @app.route('/')
-@app.route('/index')
 def index():
     param = {}
     param['username'] = "Ученик Яндекс.Лицея"
     param['title'] = 'Домашняя страница'
     return render_template('index.html', **param)
+
+@app.route('/index/<title>')
+def index1(title):
+    return render_template('base.html', title1=title)
 
 
 if __name__ == '__main__':
