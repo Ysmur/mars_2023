@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    {% if prof == 'doctor' or prof == 'teacher' %}
+        <h2>Научные симуляторы</h2>
+        <img src="/static/image/MARS-2-2.png">
+
+    {% else %}
+       <h2>Инженерные тренажеры</h2>
+       <img src="/static/image/MARS-2-1.png">
+    {% endif %}
+
+{% endblock %}
