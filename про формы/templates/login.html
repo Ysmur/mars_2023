@@ -1,14 +1,21 @@
 {% extends "base.html" %}
 
 {% block content %}
+
+<h3> <img src="../static/image/imblema.png"> Аварийный доступ</h3>
     <form action="" method="post" novalidate>
         <div>
             {{ form.csrf_token }}
         </div>
         {% for field in form if field.name != 'csrf_token' %}
             <div>
-                {{ field.label() }}
+                {% if field.name != 'submit'%}
+                    {{ field.label() }}
+
+                <hr>
+               {%endif%}
                 {{ field() }}
+
                 {% for error in field.errors %}
                     <div class="error">{{ error }}</div>
                 {% endfor %}
