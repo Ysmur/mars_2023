@@ -4,7 +4,11 @@ from loginform import LoginForm
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
-@app.route('/', methods=['POST', 'GET'])
+@app.route('/')
+def index():
+    return render_template('base.html', title="start")
+
+@app.route('/s', methods=['POST', 'GET'])
 def selection():
     if request.method == 'GET':
         param = {}
