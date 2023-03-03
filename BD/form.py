@@ -17,3 +17,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Пароль', validators=[DataRequired()])
     remember_me = BooleanField('Запомнить меня')
     submit = SubmitField('Войти')
+
+class WorksForm(FlaskForm):
+    job = EmailField('Job', validators=[DataRequired()])
+    submit = SubmitField('Войти')

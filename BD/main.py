@@ -4,7 +4,7 @@ from flask import Flask, render_template, redirect
 from data import db_session
 from data.users import User
 from data.jobs import Jobs
-from form import LoginForm, RegisterForm
+from form import LoginForm, RegisterForm, WorksForm
 from flask_login import LoginManager, login_user, logout_user, login_required
 
 app = Flask(__name__)
@@ -24,6 +24,22 @@ def index():
     jobs = db_sess.query(Jobs).all()
 
     return render_template('journal_work.html', title="start", jobs=jobs)
+
+@app.route('/add_work', methods=['GET', 'POST'])
+def add_work():
+    form = WorksForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        job = Jobs(
+            # team_leader=form.team_leader.data,
+            job=form.job.data,
+            # work_size=form.work_size.data,
+            # is_finished=form.is_finished.data
+        )
+        db_sess.add(job)
+        db_sess.commit()
+        return redirect('/')
+    return render_template('add_work.html', title='Добавление работ', form=form)
 
 
 @app.route('/login', methods=['GET', 'POST'])
