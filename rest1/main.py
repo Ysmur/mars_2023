@@ -6,6 +6,7 @@ from data.users import User
 from data.jobs import Jobs
 from form import LoginForm, RegisterForm, WorksForm
 from flask_login import LoginManager, login_user, logout_user, login_required
+from flask import make_response
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
@@ -91,7 +92,6 @@ def register():
 def success():
     return 'success'
 
-from flask import make_response
 
 @app.errorhandler(404)
 def not_found(error):
@@ -101,6 +101,7 @@ def not_found(error):
 @app.errorhandler(400)
 def bad_request(_):
     return make_response(jsonify({'error': 'Bad Request'}), 400)
+
 
 def main():
     db_name = "db/mars_explorer.db"
