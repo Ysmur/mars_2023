@@ -1,6 +1,8 @@
+import sqlite3
 from datetime import datetime
 
 import flask
+import sqlalchemy
 from flask import jsonify, request
 
 from . import db_session
@@ -48,15 +50,19 @@ def create_jobs():
                  ['job', 'work_size', 'team_leader']):
         return jsonify({'error': 'Bad request'})
     db_sess = db_session.create_session()
-    jobs = Jobs(
-        job=request.json['job'],
-        team_leader=request.json['team_leader'],
-        work_size=request.json['work_size'],
-        collaborators=request.json['collaborators'],
-        start_date=datetime.now().date(),
-        end_date=datetime.now().date(),
-        is_finished=False
-    )
-    db_sess.add(jobs)
-    db_sess.commit()
+    try:
+        jobs = Jobs(
+            id=2,
+            job=request.json['job'],
+            team_leader=request.json['team_leader'],
+            work_size=request.json['work_size'],
+            collaborators=request.json['collaborators'],
+            start_date=datetime.now().date(),
+            end_date=datetime.now().date(),
+            is_finished=False
+        )
+        db_sess.add(jobs)
+        db_sess.commit()
+    except sqlalchemy.exc.IntegrityError:
+        return jsonify({'error': 'id'})
     return jsonify({'success': 'OK'})
