@@ -1,3 +1,4 @@
+import sqlalchemy
 from flask import jsonify
 from flask_restful import Resource, abort, reqparse
 from data import db_session
@@ -36,10 +37,15 @@ class UsersListResource(Resource):
             name=args['name'],
             age=args['age'],
             position=args['position'],
-            address=args['address']
+            email=args['email'],
+           # hashed_password=args['hashed_password']
         )
-        session.add(user)
-        session.commit()
+        user.set_password(args['hashed_password'])
+        try:
+            session.add(user)
+            session.commit()
+        except sqlalchemy.exc.IntegrityError:
+            return jsonify({'error': 'wrong email'})
         return jsonify({'success': 'OK'})
 
     def get(self):
