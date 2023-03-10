@@ -29,7 +29,18 @@ class UsersResource(Resource):
 
 class UsersListResource(Resource):
     def post(self):
-        pass
+        args = parser.parse_args()
+        session = db_session.create_session()
+        user = User(
+            surname=args['surname'],
+            name=args['name'],
+            age=args['age'],
+            position=args['position'],
+            address=args['address']
+        )
+        session.add(user)
+        session.commit()
+        return jsonify({'success': 'OK'})
 
     def get(self):
         session = db_session.create_session()
