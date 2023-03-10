@@ -14,8 +14,11 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-# для списка объектов
+# для одного объекта
 api.add_resource(users_resource.UsersResource, '/api/v2/users/<int:user_id>')
+
+# для списка объектов
+api.add_resource(users_resource.UsersListResource, '/api/v2/users')
 
 @login_manager.user_loader
 def load_user(user_id):
